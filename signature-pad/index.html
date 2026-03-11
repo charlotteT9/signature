@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Signature Pad</title>
+
+<style>
+body{
+  font-family: Arial, sans-serif;
+  text-align:center;
+  margin-top:40px;
+  background:#f7f7f7;
+}
+
+.container{
+  background:white;
+  width:420px;
+  margin:auto;
+  padding:20px;
+  border-radius:8px;
+  box-shadow:0 2px 8px rgba(0,0,0,0.1);
+}
+
+canvas{
+  border:1px solid #ccc;
+  border-radius:4px;
+  cursor:crosshair;
+  touch-action:none;
+}
+
+.buttons{
+  margin-top:10px;
+}
+
+button{
+  padding:8px 14px;
+  margin:5px;
+  border:none;
+  border-radius:4px;
+  background:#2f6fed;
+  color:white;
+  cursor:pointer;
+}
+
+button:hover{
+  background:#1f4fb8;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h3>Please Sign Below</h3>
+
+<canvas id="signature" width="400" height="200"></canvas>
+
+<div class="buttons">
+<button onclick="clearSignature()">Clear</button>
+<button onclick="downloadSignature()">Download</button>
+</div>
+
+</div>
+
+<script>
+
+const canvas = document.getElementById("signature");
+const ctx = canvas.getContext("2d");
+
+let drawing = false;
+
+ctx.lineWidth = 2;
+ctx.lineCap = "round";
+
+function getPos(e){
+ const rect = canvas.getBoundingClientRect();
+
+ if(e.touches){
+  return {
+   x: e.touches[0].clientX - rect.left,
+   y: e.touches[0].clientY - rect.top
+  };
+ }
+
+ return {
+  x: e.clientX - rect.left,
+  y: e.clientY - rect.top
+ };
+}
+
+function startDraw(e){
+ drawing = true;
+ const pos = getPos(e);
+ ctx.beginPath();
+ ctx.moveTo(pos.x,pos.y);
+}
+
+function draw(e){
+ if(!drawing) return;
+
+ const pos = getPos(e);
+ ctx.lineTo(pos.x,pos.y);
+ ctx.stroke();
+}
+
+function stopDraw(){
+ drawing = false;
+}
+
+function clearSignature(){
+ ctx.clearRect(0,0,canvas.width,canvas.height);
+}
+
+function downloadSignature(){
+ const link = document.createElement("a");
+ link.download = "signature.png";
+ link.href = canvas.toDataURL();
+ link.click();
+}
+
+canvas.addEventListener("mousedown",startDraw);
+canvas.addEventListener("mousemove",draw);
+canvas.addEventListener("mouseup",stopDraw);
+canvas.addEventListener("mouseleave",stopDraw);
+
+canvas.addEventListener("touchstart",startDraw);
+canvas.addEventListener("touchmove",draw);
+canvas.addEventListener("touchend",stopDraw);
+
+</script>
+
+</body>
+</html>
