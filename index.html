@@ -118,15 +118,15 @@ function clearSignature(){
  ctx.clearRect(0,0,canvas.width,canvas.height);
 }
 
-/*function downloadSignature() {
+function downloadSignature() {
     const link = document.createElement("a");
     link.download = `signature_${new Date().toISOString().replace(/[:.]/g, '-')}.png`;
     link.href = canvas.toDataURL();
     link.click();
-} */
-function getSignature(){ 
+} 
+/*function getSignature(){ 
 const base64 = canvas.toDataURL("image/png");
-document.getElementById("signatureOutput").value = base64; } 
+document.getElementById("signatureOutput").value = base64; } */
 
 canvas.addEventListener("mousedown",startDraw);
 canvas.addEventListener("mousemove",draw);
