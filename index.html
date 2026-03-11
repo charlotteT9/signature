@@ -59,11 +59,13 @@ button:hover{
 <div class="buttons">
 <button onclick="clearSignature()">Clear</button>
 <button onclick="downloadSignature()">Download</button>
-<!-- <button onclick="getSignature()">Get Base64</button> -->
+<button onclick="getSignature(); window.Cyferd.runAction('DISPATCH.USE_ACTION', {target:'7710a5d4-21a7-4987-9775-cc094da52b5e', event:'{{event}}', scope:'local'});">
+    Get Base64
+</button> 
 </div>
-<!-- <textarea id="signatureOutput"
+ <textarea id="signatureOutput"
  style="width:100%; height:120px; margin-top:10px;"
- placeholder="Base64 signature will appear here"></textarea> -->
+ placeholder="Base64 signature will appear here"></textarea> 
 
 </div>
 
@@ -122,9 +124,9 @@ function downloadSignature() {
     link.href = canvas.toDataURL();
     link.click();
 }
-/* function getSignature(){ 
+function getSignature(){ 
 const base64 = canvas.toDataURL("image/png");
-document.getElementById("signatureOutput").value = base64; } */
+document.getElementById("signatureOutput").value = base64; } 
 
 canvas.addEventListener("mousedown",startDraw);
 canvas.addEventListener("mousemove",draw);
