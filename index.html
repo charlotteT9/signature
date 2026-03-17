@@ -119,11 +119,15 @@ function clearSignature(){
 }
 
 function downloadSignature() {
+
     const link = document.createElement("a");
     link.download = `signature_${new Date().toISOString().replace(/[:.]/g, '-')}.png`;
-    link.href = canvas.toDataURL();
+    link.href = canvas.toDataURL("image/png");
+
+    document.body.appendChild(link);
     link.click();
-} 
+    document.body.removeChild(link);
+}
 /*function getSignature(){ 
 const base64 = canvas.toDataURL("image/png");
 document.getElementById("signatureOutput").value = base64; } */
