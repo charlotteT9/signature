@@ -59,6 +59,7 @@ button:hover{
 <div class="buttons">
 <button onclick="clearSignature()">Clear</button>
 <button onclick="downloadSignature()">Download</button>
+<button onclick="submitSignature()">Submit</button>
 <!-- <button onclick="getSignature();">
     Get Base64
 </button> 
@@ -73,6 +74,13 @@ button:hover{
 
 const canvas = document.getElementById("signature");
 const ctx = canvas.getContext("2d");
+const params = new URLSearchParams(window.location.search);
+
+const recordId = params.get("recordId");
+const collectionId = params.get("collectionId");
+
+console.log("RecordId:", recordId);
+console.log("CollectionId:", collectionId);
 
 let drawing = false;
 
@@ -127,6 +135,36 @@ function downloadSignature() {
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+}
+function submitSignature() {
+
+    if (!recordId || !collectionId) {
+        alert("Missing recordId or collectionId in URL");
+        return;
+    }
+
+    const base64 = canvas.toDataURL("image/png").split(",")[1];
+
+    fetch("https://your-api-url/api/transport/records", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            recordId: recordId,
+            collectionId: collectionId,
+            base64: base64
+        })
+    })
+    .then(res => res.json())
+    .then(data => {
+        console.log("Success:", data);
+        alert("Signature submitted successfully!");
+    })
+    .catch(err => {
+        console.error(err);
+        alert("Error submitting signature");
+    });
 }
 /*function getSignature(){ 
 const base64 = canvas.toDataURL("image/png");
