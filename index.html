@@ -145,7 +145,7 @@ function submitSignature() {
 
     const base64 = canvas.toDataURL("image/png").split(",")[1];
 
-    fetch("https://localhost:7048/api/transport/records", {
+    fetch("https://localhost:7048/api/signature/records", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
