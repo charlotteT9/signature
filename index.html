@@ -163,7 +163,7 @@ function submitSignature() {
     })
     .catch(err => {
         console.error(err);
-        alert("Error submitting signature");
+        alert("Error submitting signature" + err.message);
     });
 }
 /*function getSignature(){ 
