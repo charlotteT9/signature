@@ -139,8 +139,15 @@ function clearSignature(){
 function downloadSignature() {
     const dataUrl = canvas.toDataURL("image/png");
 
-    // Open in new tab instead of forcing download
-    window.open(dataUrl, "_blank");
+    const newWindow = window.open();
+    newWindow.document.write(`
+        <html>
+            <head><title>Signature</title></head>
+            <body style="margin:0; display:flex; justify-content:center; align-items:center;">
+                <img src="${dataUrl}" style="max-width:100%;"/>
+            </body>
+        </html>
+    `);
 }
 function submitSignature() {
 
