@@ -126,7 +126,7 @@ function clearSignature(){
  ctx.clearRect(0,0,canvas.width,canvas.height);
 }
 
-function downloadSignature() {
+/*function downloadSignature() {
 
     const link = document.createElement("a");
     link.download = `signature_${new Date().toISOString().replace(/[:.]/g, '-')}.png`;
@@ -135,6 +135,12 @@ function downloadSignature() {
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+} */
+function downloadSignature() {
+    const dataUrl = canvas.toDataURL("image/png");
+
+    // Open in new tab instead of forcing download
+    window.open(dataUrl, "_blank");
 }
 function submitSignature() {
 
