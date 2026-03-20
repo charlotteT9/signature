@@ -148,6 +148,7 @@ function downloadSignature() {
             </body>
         </html>
     `);
+    newWindow.document.close(); // 👈 THIS FIXES THE LOADING ISSUE
 }
 function submitSignature() {
 
